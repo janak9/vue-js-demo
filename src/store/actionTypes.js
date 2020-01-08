@@ -1,0 +1,5 @@
+export default {
+    LOGIN: "LOGIN_USER",
+    REGISTER: "REGISTER_USER",
+    GET_USER: "GET_USER_DATA_FROM_LOCAL_TOKEN"
+}

@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <NavBar />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NavBar from './components/NavBar';
+import actionTypes from './store/actionTypes'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    NavBar,
+  },
+  mounted() {
+    console.log("app mounted");
+    let local_token = window.localStorage.auth_token;
+    if(local_token){
+      this.$store.dispatch(actionTypes.GET_USER, local_token)
+    }
+  },
 }
 </script>
 
@@ -23,6 +31,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.row{
+  margin: 0;
 }
 </style>
