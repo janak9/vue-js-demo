@@ -1,4 +1,73 @@
 <template>
+    <v-layout
+        align-center
+        justify-center
+        mt-12
+    >
+        <v-flex
+            xs12
+            sm8
+            md4
+        >
+            <v-card class="elevation-12">
+                <v-form @submit.prevent="register">
+                    <v-toolbar
+                        color="primary"
+                        dark
+                        flat
+                    >
+                        <v-toolbar-title>Registration</v-toolbar-title>
+                    </v-toolbar>
+                    <v-card-text>
+                            <v-text-field
+                                label="Username"
+                                name="username"
+                                type="text"
+                                v-model="registerInfo.username"
+                                outlined
+                                required
+                            ></v-text-field>
+                            
+                            <v-text-field
+                                label="Password"
+                                name="password"
+                                type="password"
+                                v-model="registerInfo.password"
+                                outlined
+                                required
+                            ></v-text-field>
+
+                            <v-select
+                                v-model="registerInfo.role"
+                                :items="roles"
+                                :rules="[v => !!v || 'Item is required']"
+                                label="Role"
+                                required
+                                outlined
+                            ></v-select>
+                    </v-card-text>
+                    <v-card-text v-if="registerError != ''">
+                        <v-alert type="error" border="left">
+                            {{ registerError }}
+                        </v-alert>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn 
+                            color="primary"
+                            type="submit"
+                        >Submit</v-btn>
+                        <v-btn
+                            color="error"
+                            class="mr-4"
+                            type="reset"
+                        >Reset</v-btn>
+                    </v-card-actions>
+                </v-form>
+            </v-card>
+        </v-flex>
+    </v-layout>
+<!--
 <div class="row" style="margin-top:40px;">
     <div class="col-lg-3"></div>
     <div class="col-lg-6 login_form" style="padding:50px;">
@@ -27,6 +96,7 @@
         </form>
     </div>
 </div>
+-->
 </template>
 
 <script>
@@ -36,6 +106,7 @@ export default {
     name: "Registration",
     data() {
         return {
+            roles: ['team', 'player'],
             registerInfo: {
                 username: "",
                 password: "",
@@ -51,7 +122,6 @@ export default {
             }).catch(error => {
                 console.log(error);
                 this.registerError = error.response.data
-
             } );
         }
     },

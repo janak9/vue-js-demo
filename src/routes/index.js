@@ -8,6 +8,7 @@ import NotFound_404 from '../components/NotFound_404'
 import Dashboard from '../components/Dashboard'
 import DashboardHome from '../components/DashboardHome'
 import ViewTeams from '../components/ViewTeams'
+import AddTeam from '../components/AddTeam'
 import ViewPlayers from '../components/ViewPlayers'
 
 const routes = [
@@ -20,10 +21,10 @@ const routes = [
         component: Dashboard,
         children: [
             { name:"dashboard", path: "", component: DashboardHome },
-            { name:"dashboard.add.team", path: "/team/add", component: DashboardHome },
-            { name:"dashboard.view.team", path: "/team", component: ViewTeams },
-            { name:"dashboard.add.player", path: "/player/add", component: DashboardHome },
-            { name:"dashboard.view.player", path: "/player", component: ViewPlayers },
+            { name:"dashboard.add.team", path: "team/add", component: AddTeam },
+            { name:"dashboard.view.team", path: "team", component: ViewTeams },
+            { name:"dashboard.add.player", path: "player/add", component: DashboardHome },
+            { name:"dashboard.view.player", path: "player", component: ViewPlayers },
         ]
     },
 

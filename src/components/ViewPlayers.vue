@@ -2,7 +2,7 @@
   <div>
     <h2>View Players</h2>
     <template v-if="players">
-        <table border="1" align="center">
+        <table border="1" align="center" cellpadding="8">
             <tr>
                <th>No.</th> 
                <th>Name</th> 
