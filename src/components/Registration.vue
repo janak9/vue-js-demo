@@ -40,7 +40,7 @@
                             <v-select
                                 v-model="registerInfo.role"
                                 :items="roles"
-                                :rules="[v => !!v || 'Item is required']"
+                                :rules="[v => !!v || 'Role is required']"
                                 label="Role"
                                 required
                                 outlined

@@ -23,6 +23,6 @@ export default {
         height: 100%;
     }
     .main-content{
-      width: 80%;
+        overflow: hidden;
     }
 </style>

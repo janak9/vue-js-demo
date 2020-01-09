@@ -4,19 +4,22 @@
       color="primary"
       dark
     >
-        <div class="d-flex align-center">
-            <v-img
-            alt="Vuetify Logo"
-            class="shrink mr-2"
-            contain
-            src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-            transition="scale-transition"
-            width="40"
-            />
-        </div>
-        <div class="d-flex align-center">
-            Vue Demo
-        </div>
+        
+            <div class="d-flex align-center">
+                <v-img
+                alt="Vuetify Logo"
+                class="shrink mr-2"
+                contain
+                src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+                transition="scale-transition"
+                width="40"
+                />
+            </div>
+            <router-link to="/">
+            <div class="d-flex align-center">
+                Vue Demo
+            </div>
+        </router-link>
 
         <v-spacer></v-spacer>
         <template v-if="auth_token != '' && auth_token != 'null'">
@@ -89,3 +92,10 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+    a{
+        color: #fff !important;
+        text-decoration: none;
+    }
+</style>

@@ -8,7 +8,7 @@ import actionTypes from './store/actionTypes'
 import axios from './axios'
 import vuetify from './plugins/vuetify';
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 Vue.use(VueRouter);
 
 Vue.config.productionTip = false

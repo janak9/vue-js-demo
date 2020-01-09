@@ -16,7 +16,7 @@ export default function() {
         return response
     }, (error) => {
         console.log("axios.interceptors");
-        if(error.response.status == 401){
+        if(error.response && error.response.status == 401){
             store.commit(actionTypes.LOGOUT);
             if ( router.currentRoute.name != 'login') {
                 router.push({ name: 'login' });
