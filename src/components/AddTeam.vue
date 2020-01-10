@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card>
-        <v-form @submit.prevent="add">
+        <v-form @submit.prevent="add" ref="add_team">
             <v-card-title>
                 Add Team
             </v-card-title>
@@ -11,6 +11,8 @@
                     name="name"
                     type="text"
                     v-model="teamInfo.name"
+                    :rules="nameRule"
+                    :counter="20"
                     outlined
                     ></v-text-field>
 
@@ -79,6 +81,10 @@ export default {
     name: "AddTeam",
     data() {
         return {
+            nameRule: [ 
+                v => !!v || 'Name is required', // !!v for convert value to the true false only v return value so !! will convert it to boolean
+                v => (v && v.length <= 20) || 'Name must be less than or equal to 20 characters'
+            ],
             teamInfo: {
                 name: "",
                 logo: "",
@@ -89,12 +95,14 @@ export default {
     },
     methods: {
         add(){
-            axios().post("/team/create", this.teamInfo).then(() => {
-                this.$router.push({ name: "dashboard.view.team" });
-            }).catch(error => {
-                console.log(error);
-                this.error = error.response.data
-            } );
+            if(this.$refs.add_team.validate()){
+                axios().post("/team/create", this.teamInfo).then(() => {
+                    this.$router.push({ name: "dashboard.view.team" });
+                }).catch(error => {
+                    console.log(error);
+                    this.error = error.response.data
+                });   
+            }
         }
     },
 }

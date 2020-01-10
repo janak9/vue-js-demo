@@ -10,7 +10,7 @@
             md4
         >
             <v-card class="elevation-12">
-                <v-form @submit.prevent="register">
+                <v-form @submit.prevent="register" ref="register_form">
                     <v-toolbar
                         color="primary"
                         dark
@@ -25,7 +25,7 @@
                                 type="text"
                                 v-model="registerInfo.username"
                                 outlined
-                                required
+                                :rules="[v => !!v || 'Username is required']"
                             ></v-text-field>
                             
                             <v-text-field
@@ -34,7 +34,7 @@
                                 type="password"
                                 v-model="registerInfo.password"
                                 outlined
-                                required
+                                :rules="[v => !!v || 'Password is required']"
                             ></v-text-field>
 
                             <v-select
@@ -60,7 +60,7 @@
                         <v-btn
                             color="error"
                             class="mr-4"
-                            type="reset"
+                            @click="reset"
                         >Reset</v-btn>
                     </v-card-actions>
                 </v-form>
@@ -101,6 +101,7 @@
 
 <script>
 import axios from '../axios'
+import actionTypes from '../store/actionTypes'
 
 export default {
     name: "Registration",
@@ -117,12 +118,19 @@ export default {
     },
     methods: {
         register(){
-            axios().post("/register", this.registerInfo).then(() => {
-                this.$router.push({ name:"login" });
-            }).catch(error => {
-                console.log(error);
-                this.registerError = error.response.data
-            } );
+            if(this.$refs.register_form.validate()){    
+                this.$store.dispatch(actionTypes.REGISTER, this.registerInfo)
+                    .then( () => this.$router.push({ name:"dashboard" }) )
+                    .catch( error => this.registerError = error.response.data );
+            }
+        },
+
+        reset(){
+            this.registerInfo = {
+                username: "",
+                password: "",
+                role: ""
+            }
         }
     },
 }

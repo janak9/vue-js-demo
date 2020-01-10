@@ -1,7 +1,7 @@
 <template>
 <v-container>
     <v-card>
-        <v-form @submit.prevent="add">
+        <v-form @submit.prevent="add" ref="add_player">
             <v-card-title>
                 Add Player
             </v-card-title>
@@ -12,6 +12,8 @@
                     type="text"
                     v-model="playerInfo.name"
                     outlined
+                    :counter="20"
+                    :rules="nameRule"
                     ></v-text-field>
                     
                 <v-select 
@@ -20,7 +22,6 @@
                     item-text="name"
                     item-value="_id"
                     :rules="[v => !!v || 'Team is required']"
-                    required
                     outlined
                     label="Team"></v-select>
 
@@ -28,7 +29,6 @@
                     v-model="playerInfo.skill" 
                     :items="skills"
                     :rules="[v => !!v || 'Skill is required']"
-                    required
                     outlined
                     label="Skill"></v-select>
 
@@ -60,6 +60,10 @@ export default {
         return {
             teams: [],
             skills: ['Bowler', 'Batsman', 'WicketKeeper', 'AllRounder'],
+            nameRule: [ 
+                v => !!v || 'Name is required', // !!v for convert value to the true false only v return value so !! will convert it to boolean
+                v => (v && v.length <= 20) || 'Name must be less than or equal to 20 characters'
+            ],
             playerInfo: {
                 name: "",
                 team_id: "",
@@ -77,12 +81,14 @@ export default {
     },
     methods: {
         add(){
-            axios().post("/player/create", this.playerInfo).then(() => {
-                this.$router.push({ name: "dashboard.view.player" });
-            }).catch(error => {
-                console.log(error);
-                this.error = error.response.data
-            } );
+            if(this.$refs.add_player.validate()){
+                axios().post("/player/create", this.playerInfo).then(() => {
+                    this.$router.push({ name: "dashboard.view.player" });
+                }).catch(error => {
+                    console.log(error);
+                    this.error = error.response.data
+                });   
+            }
         }
     },
 }

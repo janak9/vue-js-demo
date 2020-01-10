@@ -10,7 +10,7 @@
             md4
         >
             <v-card class="elevation-12">
-                <v-form @submit.prevent="login">
+                <v-form @submit.prevent="login" ref="login_form">
                     <v-toolbar
                         color="primary"
                         dark
@@ -24,8 +24,8 @@
                                 name="username"
                                 type="text"
                                 v-model="loginInfo.username"
+                                :rules="[v => !!v || 'Username is required']"
                                 outlined
-                                required
                             ></v-text-field>
                             
                             <v-text-field
@@ -33,7 +33,7 @@
                                 name="password"
                                 type="password"
                                 v-model="loginInfo.password"
-                                required
+                                :rules="[v => !!v || 'Password is required']"
                                 outlined
                             ></v-text-field>
                     </v-card-text>
@@ -99,9 +99,11 @@ export default {
     },
     methods: {
         login(){
-            this.$store.dispatch(actionTypes.LOGIN, this.loginInfo)
-                    .then(() => this.$router.push({ name:"dashboard" }))
-                    .catch(error => this.loginError = error.response.data);
+            if(this.$refs.login_form.validate()){
+                this.$store.dispatch(actionTypes.LOGIN, this.loginInfo)
+                        .then(() => this.$router.push({ name:"dashboard" }))
+                        .catch(error => this.loginError = error.response.data);           
+            }
         }
     },
 }

@@ -184,7 +184,7 @@ export default {
                 axios().delete("/player/" + item._id).then((result) => {
                     this.players.splice(index, 1);
                 }).catch((err) => {
-                    alert("something was wrong!");    
+                    alert(err.response.data);    
                 });
             } 
         },
